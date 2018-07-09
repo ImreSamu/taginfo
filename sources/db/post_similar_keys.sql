@@ -32,9 +32,9 @@ CREATE TABLE similar_keys_common_rare (
 
 INSERT INTO similar_keys_common_rare (key_common, key_rare, count_all_common, count_all_rare, similarity)
     SELECT key1, key2, count_all1, count_all2, similarity
-        FROM similar_keys WHERE count_all1 >= 1000 AND count_all2 <= 10 AND count_all2 > 0;
+        FROM similar_keys WHERE count_all1 >= 100 AND count_all2 <= 10 AND count_all2 > 0;
 
 INSERT INTO similar_keys_common_rare (key_common, key_rare, count_all_common, count_all_rare, similarity)
     SELECT key2, key1, count_all2, count_all1, similarity
-        FROM similar_keys WHERE count_all2 >= 1000 AND count_all1 <= 10 AND count_all1 > 0;
+        FROM similar_keys WHERE count_all2 >= 100 AND count_all1 <= 10 AND count_all1 > 0;
 

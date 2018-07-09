@@ -202,7 +202,7 @@ class Taginfo < Sinatra::Base
     }) do
         query = like_contains(params[:query])
 
-        cond = "(similarity != 0 OR lower(key_common) = lower(key_rare)) AND count_all_common >= 10000"
+        cond = "(similarity != 0 OR lower(key_common) = lower(key_rare)) AND count_all_common >= 10"
 
         total = @db.count('similar_keys_common_rare').
             condition(cond).
@@ -245,7 +245,7 @@ class Taginfo < Sinatra::Base
     api(4, 'keys/without_wiki_page', {
         :description => 'Return frequently used tag keys that have no associated wiki page.',
         :parameters => {
-            :min_count => 'How many tags with this key must there be at least to show up here? (default 10000).',
+            :min_count => 'How many tags with this key must there be at least to show up here? (default 10).',
             :english => 'Check for key wiki pages in any language (0, default) or in the English language (1).',
             :query => 'Only show results where the key matches this query (substring match, optional).'
         },
@@ -269,7 +269,7 @@ class Taginfo < Sinatra::Base
 
         min_count = params[:min_count].to_i
         if min_count == 0
-            min_count = 10000
+            min_count = 10
         end
 
         english = (params[:english] == '1') ? '_en' : ''
