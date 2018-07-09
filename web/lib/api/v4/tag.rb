@@ -1,6 +1,106 @@
 # web/lib/api/v4/tag.rb
 class Taginfo < Sinatra::Base
 
+
+
+
+    api(4, 'tag/tagnames', {
+        :description => 'Find osm `name` key values that are used together with a given tag.',
+        :parameters => {
+            :key => 'Tag key (required).',
+            :value => 'Tag value (required).',
+            :query => 'Only show results where the other_value matches this query (substring match, optional).'
+        },
+        :paging => :optional,
+        :filter => {
+            :all       => { :doc => 'No filter.' },
+            :nodes     => { :doc => 'Only values on tags used on nodes.' },
+            :ways      => { :doc => 'Only values on tags used on ways.' },
+            :relations => { :doc => 'Only values on tags used on relations.' }
+        },
+        :sort => %w( tagname_count tagname_value ),
+        :result => paging_results([
+            [:tagname_value, :STRING, 'Name value (may be empty).'],
+            [:tagname_count, :INT,    'Number of objects that have both this tag and other key.']
+        ]),
+        :example => { :key => 'amenity', :value => 'fast_food', :page => 1, :rp => 10, :sortname => 'tagname_count', :sortorder => 'desc' },
+        :ui => '/tags/amenity=fast_food#tagnames'
+    }) do
+        key = params[:key]
+        value = params[:value]
+        filter_type = get_filter()
+        query_substr = like_contains(params[:query])
+
+        if    @ap.sortname == 'tagname_count'
+            @ap.sortname = ['tagname_count']
+        elsif @ap.sortname == 'tagname_value'
+            @ap.sortname = ['tagname_value']
+        end
+
+        cq = @db.count('db.tag_combinations')
+        total = (params[:query].to_s != '' ?
+                cq.condition("(key1=? AND value1=? AND key2=? AND ( value2 LIKE ? ESCAPE '@')) OR (key2=? AND value2=? AND key1=? AND (value1 LIKE ? ESCAPE '@'))",
+                                    key,         value,     'name',          query_substr,           key,         value,       'name',        query_substr) :
+                cq.condition("(key1=? AND value1=? AND key2=? AND value2!='') OR (key2=? AND value2=? AND key1=? AND value2!='')", key, value, 'name', key, value, 'name' )).
+            condition("count_#{filter_type} > 0").
+            get_first_i
+
+
+        res = (params[:query].to_s != '' ?
+            @db.select(  "SELECT value1 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key1='name' AND key2=? AND value2=? AND count_#{filter_type} > 0 AND (value1 LIKE ? ESCAPE '@')
+                UNION ALL SELECT value2 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key2='name' AND key1=? AND value1=? AND count_#{filter_type} > 0 AND (value2 LIKE ? ESCAPE '@')", key, value, query_substr, key, value, query_substr ):
+            @db.select(  "SELECT value1 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key1='name' AND key2=? AND value2=? AND count_#{filter_type} > 0 AND (value1 != '')
+                UNION ALL SELECT value2 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key2='name' AND key1=? AND value1=? AND count_#{filter_type} > 0 AND (value2 != '')", key, value, key, value )).
+            order_by(@ap.sortname, @ap.sortorder) { |o|
+                o.tagname_count
+                o.tagname_value
+            }.
+            paging(@ap).
+            execute()
+
+        return generate_json_result(total,
+            res.map{ |row| {
+                :tagname_value => row['tagname_value'],
+                :tagname_count => row['tagname_count'].to_i
+            } }
+        )
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     api(4, 'tag/combinations', {
         :description => 'Find keys and tags that are used together with a given tag.',
         :parameters => {
@@ -80,6 +180,17 @@ class Taginfo < Sinatra::Base
             } }
         )
     end
+
+
+
+
+
+
+
+
+
+
+
 
     api(4, 'tag/distribution/nodes', {
         :description => 'Get map with distribution of this tag in the database (nodes only). Will return empty image if there is no map available for this tag.',

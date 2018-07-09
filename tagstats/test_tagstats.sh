@@ -29,5 +29,6 @@ else
 fi
 
 #valgrind --leak-check=full --show-reachable=yes
-./tagstats $selection_option --min-tag-combination-count=100 $IMAGE_OPTIONS $OSMFILE $DATABASE
+./tagstats $selection_option --min-tag-combination-count=1 $IMAGE_OPTIONS $OSMFILE $DATABASE
 
+sqlite3 -echo -batch $DATABASE "select * from tag_combinations where key1='amenity' and value1='fast_food' and key2='name:es';"

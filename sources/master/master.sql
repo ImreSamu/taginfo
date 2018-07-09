@@ -136,7 +136,7 @@ CREATE TABLE popular_keys (
 );
 
 INSERT INTO popular_keys (key, count, users)
-    SELECT key, count_all, users_all FROM db.keys WHERE count_all > 1000 GROUP BY key;
+    SELECT key, count_all, users_all FROM db.keys WHERE count_all > 100 GROUP BY key;
 
 -- count number of wikipages for each key
 UPDATE popular_keys SET wikipages = (SELECT count(*) FROM wiki.wikipages w WHERE w.key=popular_keys.key);
@@ -164,7 +164,7 @@ UPDATE popular_keys SET scale_count = CAST (count - (SELECT count_min FROM popul
 UPDATE popular_keys SET scale_users = CAST (users - (SELECT users_min FROM popular_metadata) AS REAL) / (SELECT users_delta FROM popular_metadata);
 UPDATE popular_keys SET scale_wiki  = CAST (wikipages AS REAL) / (SELECT max(wikipages) FROM popular_keys);
 UPDATE popular_keys SET scale_name  = 1;
-UPDATE popular_keys SET scale_name  = 0 WHERE key LIKE '%:%';
+--UPDATE popular_keys SET scale_name  = 0 WHERE key LIKE '%:%';
 
 UPDATE popular_keys SET scale1 = 10 * scale_count + 8 * scale_users + 2 * scale_wiki + 2 * scale_name;
 
@@ -188,11 +188,11 @@ CREATE TABLE suggestions (
 INSERT INTO suggestions (key, value, count, in_wiki)
         SELECT key, NULL, count_all, in_wiki
             FROM db.keys
-            WHERE count_all >= 10000 OR (in_wiki = 1 AND count_all >= 100)
+            WHERE count_all >= 1000 OR (in_wiki = 1 AND count_all >= 10)
     UNION
         SELECT DISTINCT p.key, p.value, p.count, title NOT NULL
             FROM db.prevalent_values p LEFT JOIN wiki.wikipages w ON p.key=w.key AND p.value = w.value
-            WHERE (p.count >= 1000 OR (title IS NOT NULL and p.count >= 100))
+            WHERE (p.count >= 100 OR (title IS NOT NULL and p.count >= 10))
                 AND p.fraction > 0.01
                 AND CAST(p.value AS REAL) == 0.0
                 AND length(p.value) <= 20;
