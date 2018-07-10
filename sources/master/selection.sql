@@ -19,7 +19,8 @@ ATTACH DATABASE '__DIR__/wiki/taginfo-wiki.db' AS wiki;
 DROP TABLE IF EXISTS interesting_tags;
 CREATE TABLE interesting_tags (
     key   TEXT,
-    value TEXT
+    value TEXT,
+    PRIMARY KEY (key, value)
 );
 
 -- MIN_COUNT_TAGS setting: sources.master.min_count_tags
@@ -28,9 +29,9 @@ INSERT INTO interesting_tags (key, value)
     UNION
     SELECT key, value FROM db.tags WHERE count_all >= __MIN_COUNT_TAGS__;
 
-DELETE FROM interesting_tags WHERE key IN ('created_by', 'ele', 'height', 'is_in', 'lanes', 'layer', 'maxspeed', 'ref', 'width') AND value IS NOT NULL;
+-- DELETE FROM interesting_tags WHERE key IN ('created_by', 'ele', 'height', 'is_in', 'lanes', 'layer', 'maxspeed', 'ref', 'width') AND value IS NOT NULL;
 -- DELETE FROM interesting_tags WHERE value IS NOT NULL AND key LIKE '%:%';
-DELETE FROM interesting_tags WHERE value IS NOT NULL AND key LIKE 'fresno_%';
+-- DELETE FROM interesting_tags WHERE value IS NOT NULL AND key LIKE 'fresno_%';
 
 ANALYZE interesting_tags;
 
@@ -39,7 +40,8 @@ ANALYZE interesting_tags;
 DROP TABLE IF EXISTS frequent_tags;
 CREATE TABLE frequent_tags (
     key   TEXT,
-    value TEXT
+    value TEXT,
+    PRIMARY KEY (key, value)
 );
 
 -- MIN_COUNT_FOR_MAP setting: sources.master.min_count_for_map
@@ -51,7 +53,8 @@ ANALYZE frequent_tags;
 
 DROP TABLE IF EXISTS interesting_relation_types;
 CREATE TABLE interesting_relation_types (
-    rtype TEXT
+    rtype TEXT,
+    PRIMARY KEY (rtype)
 );
 
 -- MIN_COUNT_RELATIONS_PER_TYPE setting: sources.master.min_count_relations_per_type

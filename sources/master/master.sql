@@ -6,6 +6,9 @@
 --
 -- ============================================================================
 
+.timer on
+.echo on
+
 ATTACH DATABASE '__DIR__/db/taginfo-db.db'               AS db;
 ATTACH DATABASE '__DIR__/wiki/taginfo-wiki.db'           AS wiki;
 ATTACH DATABASE '__DIR__/languages/taginfo-languages.db' AS languages;
@@ -88,21 +91,27 @@ UPDATE db.tags SET in_wiki_en=1 WHERE key IN (SELECT DISTINCT key FROM wiki.wiki
 
 DROP TABLE IF EXISTS top_tags;
 CREATE TABLE top_tags (
-  skey            VARCHAR,
-  svalue          VARCHAR,
+  skey            VARCHAR NOT NULL,
+  svalue          VARCHAR NOT NULL,
   count_all       INTEGER DEFAULT 0,
   count_nodes     INTEGER DEFAULT 0,
   count_ways      INTEGER DEFAULT 0,
   count_relations INTEGER DEFAULT 0,
   in_wiki         INTEGER DEFAULT 0,
   in_wiki_en      INTEGER DEFAULT 0,
-  projects        INTEGER DEFAULT 0
+  projects        INTEGER DEFAULT 0,
+  PRIMARY KEY (skey, svalue)
 );
 
 INSERT INTO top_tags (skey, svalue)
-    SELECT DISTINCT key1, value1 FROM db.tag_combinations WHERE value1 != ''
+  SELECT k,v FROM
+   (
+    SELECT DISTINCT key1 as k, value1 as v FROM db.tag_combinations WHERE value1 != ''
     UNION
-    SELECT DISTINCT key2, value2 FROM db.tag_combinations WHERE value2 != '';
+    SELECT DISTINCT key2 as k, value2 as v FROM db.tag_combinations WHERE value2 != ''
+   ) as t 
+  ORDER BY k,v;
+
 
 UPDATE top_tags SET
     count_all       = (SELECT t.count_all       FROM db.tags t WHERE t.key=skey AND t.value=svalue),
@@ -113,7 +122,21 @@ UPDATE top_tags SET
 UPDATE top_tags SET in_wiki=1    WHERE skey || '=' || svalue IN (SELECT DISTINCT tag FROM wiki.wikipages WHERE value IS NOT NULL AND value != '*');
 UPDATE top_tags SET in_wiki_en=1 WHERE skey || '=' || svalue IN (SELECT DISTINCT tag FROM wiki.wikipages WHERE value IS NOT NULL AND value != '*' AND lang='en');
 
-UPDATE top_tags SET projects=(SELECT projects FROM projects.project_unique_tags p WHERE p.key=skey AND p.value=svalue);
+
+-- create temporary sorted table :    count(*) from projects.project_unique_tags ==> 89298 !!
+DROP TABLE IF EXISTS temp_project_unique_tags;
+CREATE TABLE temp_project_unique_tags (
+  key            VARCHAR NOT NULL,
+  value          VARCHAR NOT NULL,
+  projects       INTEGER DEFAULT 0,
+  PRIMARY KEY (key, value)
+);
+INSERT INTO temp_project_unique_tags (key, value, projects)
+    SELECT key, value, projects 
+    FROM projects.project_unique_tags
+    ORDER BY  key, value;
+
+UPDATE top_tags SET projects=(SELECT projects FROM temp_project_unique_tags p WHERE p.key=skey AND p.value=svalue);
 
 CREATE UNIQUE INDEX top_tags_key_value_idx ON top_tags (skey, svalue);
 
