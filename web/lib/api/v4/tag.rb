@@ -9,6 +9,7 @@ class Taginfo < Sinatra::Base
         :parameters => {
             :key => 'Tag key (required).',
             :value => 'Tag value (required).',
+            :key2 => 'Tag2 key (required).',           
             :query => 'Only show results where the other_value matches this query (substring match, optional).'
         },
         :paging => :optional,
@@ -23,11 +24,18 @@ class Taginfo < Sinatra::Base
             [:tagname_value, :STRING, 'Name value (may be empty).'],
             [:tagname_count, :INT,    'Number of objects that have both this tag and other key.']
         ]),
-        :example => { :key => 'amenity', :value => 'fast_food', :page => 1, :rp => 10, :sortname => 'tagname_count', :sortorder => 'desc' },
+        :example => { :key => 'amenity', :value => 'fast_food', :key2 => 'name', :page => 1, :rp => 10, :sortname => 'tagname_count', :sortorder => 'desc' },
         :ui => '/tags/amenity=fast_food#tagnames'
     }) do
         key = params[:key]
         value = params[:value]
+ 
+        if  params[:key2].to_s != ''
+            key2=params[:key2] 
+        else 
+            key2= 'name'
+        end
+
         filter_type = get_filter()
         query_substr = like_contains(params[:query])
 
@@ -40,17 +48,17 @@ class Taginfo < Sinatra::Base
         cq = @db.count('db.tag_combinations')
         total = (params[:query].to_s != '' ?
                 cq.condition("(key1=? AND value1=? AND key2=? AND ( value2 LIKE ? ESCAPE '@')) OR (key2=? AND value2=? AND key1=? AND (value1 LIKE ? ESCAPE '@'))",
-                                    key,         value,     'name',          query_substr,           key,         value,       'name',        query_substr) :
-                cq.condition("(key1=? AND value1=? AND key2=? AND value2!='') OR (key2=? AND value2=? AND key1=? AND value2!='')", key, value, 'name', key, value, 'name' )).
+                                    key,         value,     key2,          query_substr,           key,         value,       key2,        query_substr) :
+                cq.condition("(key1=? AND value1=? AND key2=? AND value2!='') OR (key2=? AND value2=? AND key1=? AND value2!='')", key, value, key2, key, value, key2 )).
             condition("count_#{filter_type} > 0").
             get_first_i
 
 
         res = (params[:query].to_s != '' ?
-            @db.select(  "SELECT value1 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key1='name' AND key2=? AND value2=? AND count_#{filter_type} > 0 AND (value1 LIKE ? ESCAPE '@')
-                UNION ALL SELECT value2 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key2='name' AND key1=? AND value1=? AND count_#{filter_type} > 0 AND (value2 LIKE ? ESCAPE '@')", key, value, query_substr, key, value, query_substr ):
-            @db.select(  "SELECT value1 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key1='name' AND key2=? AND value2=? AND count_#{filter_type} > 0 AND (value1 != '')
-                UNION ALL SELECT value2 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key2='name' AND key1=? AND value1=? AND count_#{filter_type} > 0 AND (value2 != '')", key, value, key, value )).
+            @db.select(  "SELECT value1 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key1=? AND key2=? AND value2=? AND count_#{filter_type} > 0 AND (value1 LIKE ? ESCAPE '@')
+                UNION ALL SELECT value2 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key2=? AND key1=? AND value1=? AND count_#{filter_type} > 0 AND (value2 LIKE ? ESCAPE '@')", key2, key, value, query_substr, key2, key, value, query_substr ):
+            @db.select(  "SELECT value1 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key1=? AND key2=? AND value2=? AND count_#{filter_type} > 0 AND (value1 != '')
+                UNION ALL SELECT value2 AS tagname_value, count_#{filter_type} AS tagname_count FROM db.tag_combinations WHERE key2=? AND key1=? AND value1=? AND count_#{filter_type} > 0 AND (value2 != '')", key2, key, value, key2, key, value )).
             order_by(@ap.sortname, @ap.sortorder) { |o|
                 o.tagname_count
                 o.tagname_value
