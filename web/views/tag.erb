@@ -41,7 +41,9 @@
         <li><a href="#combinations"><%= h(t.taginfo.combinations) %></a></li>
         <li><a href="#tagnames"><%= h(t.taginfo.tagnames) %></a></li>     
         <li><a href="#tagnames_en"><%= h(t.taginfo.tagnames_en) %></a></li>    
-        <li><a href="#tagnames_es"><%= h(t.taginfo.tagnames_es) %></a></li>                      
+        <li><a href="#tagnames_es"><%= h(t.taginfo.tagnames_es) %></a></li>  
+        <li><a href="#tagnames_fr"><%= h(t.taginfo.tagnames_fr) %></a></li>    
+        <li><a href="#tagnames_de"><%= h(t.taginfo.tagnames_de) %></a></li>                                        
         <li><a href="#map"><%= h(t.taginfo.map) %></a></li>
         <li><a href="#wiki"><%= h(t.sources.wiki.name) %></a></li>
         <li><a href="#projects"><%= h(t.taginfo.projects) %></a></li>
@@ -94,6 +96,25 @@
         <table id="grid-tagnames-es">
         </table>
     </div>
+
+    <div id="tagnames_fr">
+        <div class="boxpre">
+            <h2><%= h(t.pages.tag.tagnames_fr.title) %></h2>
+            <p><%= h(t.pages.tag.tagnames_fr.description) %></p>
+        </div>
+        <table id="grid-tagnames-fr">
+        </table>
+    </div>
+
+    <div id="tagnames_de">
+    <div class="boxpre">
+        <h2><%= h(t.pages.tag.tagnames_de.title) %></h2>
+        <p><%= h(t.pages.tag.tagnames_de.description) %></p>
+    </div>
+    <table id="grid-tagnames-de">
+    </table>
+    </div>
+
 
     <div id="map">
         <h2><%= h(t.pages.tag.geographic_distribution.title) %></h2>
