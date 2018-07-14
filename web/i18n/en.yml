@@ -48,7 +48,9 @@ taginfo:
     combinations: Combinations
     tagnames: name=    
     tagnames_en: name:en=    
-    tagnames_es: name:es=         
+    tagnames_es: name:es=   
+    tagnames_fr: name:fr=
+    tagnames_de: name:de=             
     key_combinations: Combinations
     comparison: Key/Tag Comparison
     overview: Overview
@@ -387,6 +389,20 @@ pages:
             tagname_count: count(*)
             tagname_value_tooltip: OpenStreetMap 'name:es'= values
             tagname_count_tooltip: Count of osm key 'name:es'= values
+        tagnames_fr:
+            title: name:fr=
+            description: This table shows only the most common 'name:es'= values.
+            tagname_value: name:fr=
+            tagname_count: count(*)
+            tagname_value_tooltip: OpenStreetMap 'name:fr'= values
+            tagname_count_tooltip: Count of osm key 'name:fr'= values
+        tagnames_de:
+            title: name:de=
+            description: This table shows only the most common 'name:de'= values.
+            tagname_value: name:de=
+            tagname_count: count(*)
+            tagname_value_tooltip: OpenStreetMap 'name:de'= values
+            tagname_count_tooltip: Count of osm key 'name:de'= values
 
         geographic_distribution:
             title: Geographical distribution of this tag
