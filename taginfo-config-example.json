@@ -1,6 +1,13 @@
 // This is an example of a taginfo config file.
 // Copy it to the directory above and name it 'taginfo-config.json', then change your local settings.
 {
+    "tnames":{
+        "lang1": "name",
+        "lang2": "name:en",
+        "lang3": "name:es",
+        "lang4": "name:fr",
+        "lang5": "name:de"
+    },
     // You probably want to change all these.
     "instance": {
         // URL prefix for the site.

@@ -1,0 +1,40 @@
+
+<%
+    osm = @trans.t.osm
+    misc = @trans.t.misc
+    page = @trans.t.reports.frequently_used_keys_without_wiki_page
+ %>
+
+ function page_init() {
+    up = function() { window.location = '/reports'; };
+    create_flexigrid('grid-normalized-names', {
+        url: '/api/4/normalization/names?',
+        colModel: [
+            { display: '<%= h(t.reports.normalized_names.k) %>', name: 'k', width: 160, sortable: true },
+            { display: '<%= h(t.reports.normalized_names.v) %>', name: 'v', width: 160, sortable: true },
+            { display: '<%= h(t.reports.normalized_names.keyname) %>', name: 'keyname', width: 160, sortable: true },
+            { display: '<%= h(t.reports.normalized_names.normalized_keyname_value) %>', name: 'normalized_keyname_value', width: 200, sortable: true },
+            { display: '<%= h(t.reports.normalized_names.keyname_value) %>', name: 'keyname_value', width: 200, sortable: true },
+            { display: '<%= h(page.number_objects) %>', name: 'count_all', width: 160, sortable: false }
+
+        ],
+        searchitems: [
+            { display: 'normalized_keyname_value', name: 'normalized_keyname_value' }
+        ],
+        sortname: 'k',
+        sortorder: 'asc',
+        preProcess: function(data) {
+            data.rows = jQuery.map(data.data, function(row, i) {
+                return { 'cell': [
+                    link_to_key(row.k),
+                    fmt_value(row.v),
+                    link_to_key(row.keyname),
+                    fmt_value(row.normalized_keyname_value),
+                    fmt_value(row.keyname_value),
+                    fmt_value(row.count_all)                                                            
+                ] };
+            });
+            return data;
+        }
+    });
+}

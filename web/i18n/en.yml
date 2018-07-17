@@ -45,12 +45,7 @@ taginfo:
     map: Map
     maps: Maps
     relations: Relations
-    combinations: Combinations
-    tagnames: name=    
-    tagnames_en: name:en=    
-    tagnames_es: name:es=   
-    tagnames_fr: name:fr=
-    tagnames_de: name:de=             
+    combinations: Combinations       
     key_combinations: Combinations
     comparison: Key/Tag Comparison
     overview: Overview
@@ -368,42 +363,6 @@ pages:
         combinations:
             title: Combinations
             description: This table shows only the most common combinations of the most common tags.
-        tagnames:
-            title: name=
-            description: This table shows only the most common 'name'= values.
-            tagname_value: name=
-            tagname_count: count(*)
-            tagname_value_tooltip: OpenStreetMap 'name'= values
-            tagname_count_tooltip: Count of osm key 'name'= values
-        tagnames_en:
-            title: name:en=
-            description: This table shows only the most common 'name:en'= values.
-            tagname_value: name:en=
-            tagname_count: count(*)
-            tagname_value_tooltip: OpenStreetMap 'name:en'= values
-            tagname_count_tooltip: Count of osm key 'name:en'= values
-        tagnames_es:
-            title: name:es=
-            description: This table shows only the most common 'name:es'= values.
-            tagname_value: name:es=
-            tagname_count: count(*)
-            tagname_value_tooltip: OpenStreetMap 'name:es'= values
-            tagname_count_tooltip: Count of osm key 'name:es'= values
-        tagnames_fr:
-            title: name:fr=
-            description: This table shows only the most common 'name:es'= values.
-            tagname_value: name:fr=
-            tagname_count: count(*)
-            tagname_value_tooltip: OpenStreetMap 'name:fr'= values
-            tagname_count_tooltip: Count of osm key 'name:fr'= values
-        tagnames_de:
-            title: name:de=
-            description: This table shows only the most common 'name:de'= values.
-            tagname_value: name:de=
-            tagname_count: count(*)
-            tagname_value_tooltip: OpenStreetMap 'name:de'= values
-            tagname_count_tooltip: Count of osm key 'name:de'= values
-
         geographic_distribution:
             title: Geographical distribution of this tag
             relations: Relations do not have a geographical location, so no map can be shown.
@@ -611,6 +570,26 @@ reports:
         also_show_keys: Also show keys that have no English language wiki page but a page in some other language.
         table:
             create_wiki_page: Create wiki page...
+
+    normalized_names:
+        name: Normalized name differences (Experimental)
+        intro: |
+            <p>Normalized OpenstreetMap name values - with different spellings.  
+            Some spelling differences maybe valid - some not ! 
+            <b>Need some local knowledge!  Be careful! Discuss with the local community! </b> 
+               (you can download (<a href="/download/normalized_names.xlsx">normalized_names.xlsx</a> )
+                and examine the result with the "LibreOffice Calc" or "Excel") 
+                 </p>
+        k: k
+        v: v
+        keyname: keyname
+        normalized_keyname_value: normalized_keyname_value
+        keyname_value: keyname_value
+
+        also_show_keys: normalized - also show
+        table:
+            create_wiki_page: Create normalized_pages page...
+                
     key_lengths:
         name: Key lengths
         intro: |

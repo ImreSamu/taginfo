@@ -12,6 +12,7 @@ class Taginfo < Sinatra::Base
         :not_in_db              => { :expr => "count_all=0",          :doc => 'Only show keys that do not appear in the database.' }
     }
 
+
     api(4, 'keys/all', {
         :description => 'Get list of all keys.',
         :parameters => { :query => 'Only show keys matching this query (substring match, optional).' },
