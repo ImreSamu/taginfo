@@ -39,11 +39,11 @@
     <ul>
         <li><a href="#overview"><%= h(t.taginfo.overview) %></a></li>
         <li><a href="#combinations"><%= h(t.taginfo.combinations) %></a></li>
-        <li><a href="#tagnames"><%= h(t.taginfo.tagnames) %></a></li>     
-        <li><a href="#tagnames_en"><%= h(t.taginfo.tagnames_en) %></a></li>    
-        <li><a href="#tagnames_es"><%= h(t.taginfo.tagnames_es) %></a></li>  
-        <li><a href="#tagnames_fr"><%= h(t.taginfo.tagnames_fr) %></a></li>    
-        <li><a href="#tagnames_de"><%= h(t.taginfo.tagnames_de) %></a></li>                                        
+        <li><a href="#tagnames_lang1"><%= TaginfoConfig.get('tnames.lang1') %></a></li>
+        <li><a href="#tagnames_lang2"><%= TaginfoConfig.get('tnames.lang2') %></a></li>
+        <li><a href="#tagnames_lang3"><%= TaginfoConfig.get('tnames.lang3') %></a></li>
+        <li><a href="#tagnames_lang4"><%= TaginfoConfig.get('tnames.lang4') %></a></li>
+        <li><a href="#tagnames_lang5"><%= TaginfoConfig.get('tnames.lang5') %></a></li>
         <li><a href="#map"><%= h(t.taginfo.map) %></a></li>
         <li><a href="#wiki"><%= h(t.sources.wiki.name) %></a></li>
         <li><a href="#projects"><%= h(t.taginfo.projects) %></a></li>
@@ -70,49 +70,30 @@
         </table>
     </div>
 
-    <div id="tagnames">
-        <div class="boxpre">
-            <h2><%= h(t.pages.tag.tagnames.title) %></h2>
-            <p><%= h(t.pages.tag.tagnames.description) %></p>
-        </div>
-        <table id="grid-tagnames">
+
+    <div id="tagnames_lang1">
+        <table id="grid-tagnames-lang1">
         </table>
     </div>
 
-    <div id="tagnames_en">
-        <div class="boxpre">
-            <h2><%= h(t.pages.tag.tagnames_en.title) %></h2>
-            <p><%= h(t.pages.tag.tagnames_en.description) %></p>
-        </div>
-        <table id="grid-tagnames-en">
+    <div id="tagnames_lang2">
+        <table id="grid-tagnames-lang2">
         </table>
     </div>
 
-    <div id="tagnames_es">
-        <div class="boxpre">
-            <h2><%= h(t.pages.tag.tagnames_es.title) %></h2>
-            <p><%= h(t.pages.tag.tagnames_es.description) %></p>
-        </div>
-        <table id="grid-tagnames-es">
+    <div id="tagnames_lang3">
+        <table id="grid-tagnames-lang3">
         </table>
     </div>
 
-    <div id="tagnames_fr">
-        <div class="boxpre">
-            <h2><%= h(t.pages.tag.tagnames_fr.title) %></h2>
-            <p><%= h(t.pages.tag.tagnames_fr.description) %></p>
-        </div>
-        <table id="grid-tagnames-fr">
+    <div id="tagnames_lang4">
+        <table id="grid-tagnames-lang4">
         </table>
     </div>
 
-    <div id="tagnames_de">
-    <div class="boxpre">
-        <h2><%= h(t.pages.tag.tagnames_de.title) %></h2>
-        <p><%= h(t.pages.tag.tagnames_de.description) %></p>
-    </div>
-    <table id="grid-tagnames-de">
-    </table>
+    <div id="tagnames_lang5">
+        <table id="grid-tagnames-lang5">
+        </table>
     </div>
 
 

@@ -65,18 +65,19 @@ var create_flexigrid_for = {
     },
 
 
-    tagnames: function(key, value, filter_type) {
-        create_flexigrid('grid-tagnames', {
+
+    tagnames_lang1: function(key, value, filter_type) {
+        create_flexigrid('grid-tagnames-lang1', {
             url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
                     '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent('name') + 
+                    '&key2='   + encodeURIComponent( '<%=TaginfoConfig.get('tnames.lang1')%>' ) + 
                     '&filter=' + encodeURIComponent(filter_type),
             colModel: [
-                { display: '<span title="<%= h(page.tagnames.tagname_count_tooltip) %>"><%= h(page.tagnames.tagname_count) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
-                { display: '<span title="<%= h(page.tagnames.tagname_value_tooltip) %>"><%= h(page.tagnames.tagname_value) %></span>',        name: 'tagname_value', width: 400, sortable: true },
+                { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
+                { display: '<span title="<%= TaginfoConfig.get('tnames.lang1') %>"><%= TaginfoConfig.get('tnames.lang1') %></span>',        name: 'tagname_value', width: 400, sortable: true },
             ],
             searchitems: [
-                { display: '<%= h(page.tagnames.tagname_value) %>', name: 'tagname_value' }
+                { display: '<%= TaginfoConfig.get('tnames.lang1') %>', name: 'tagname_value' }
             ],
             sortname: 'tagname_count',
             sortorder: 'desc',
@@ -90,47 +91,107 @@ var create_flexigrid_for = {
                 return data;
             }
         });
-    },   
+    },
+
+
+
+    tagnames_lang2: function(key, value, filter_type) {
+        create_flexigrid('grid-tagnames-lang2', {
+            url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
+                    '&value='  + encodeURIComponent(value)  + 
+                    '&key2='   + encodeURIComponent(   '<%=TaginfoConfig.get('tnames.lang2')%>' ) + 
+                    '&filter=' + encodeURIComponent(filter_type),
+            colModel: [
+                { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
+                { display: '<span title="<%= TaginfoConfig.get('tnames.lang2') %>"><%= TaginfoConfig.get('tnames.lang2') %></span>',        name: 'tagname_value', width: 400, sortable: true },
+            ],
+            searchitems: [
+                { display: '<%= TaginfoConfig.get('tnames.lang2') %>', name: 'tagname_value' }
+            ],
+            sortname: 'tagname_count',
+            sortorder: 'desc',
+            preProcess: function(data) {
+                data.rows = jQuery.map(data.data, function(row, i) {
+                    return { 'cell': [
+                        fmt_value(row.tagname_count ),
+                        fmt_value(row.tagname_value )
+                    ] };
+                });
+                return data;
+            }
+        });
+    },
+
+
+    tagnames_lang3: function(key, value, filter_type) {
+        create_flexigrid('grid-tagnames-lang3', {
+            url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
+                    '&value='  + encodeURIComponent(value)  + 
+                    '&key2='   + encodeURIComponent(   '<%=TaginfoConfig.get('tnames.lang3')%>' ) + 
+                    '&filter=' + encodeURIComponent(filter_type),
+            colModel: [
+                { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
+                { display: '<span title="<%= TaginfoConfig.get('tnames.lang3') %>"><%= TaginfoConfig.get('tnames.lang3') %></span>',        name: 'tagname_value', width: 400, sortable: true },
+            ],
+            searchitems: [
+                { display: '<%= TaginfoConfig.get('tnames.lang3') %>', name: 'tagname_value' }
+            ],
+            sortname: 'tagname_count',
+            sortorder: 'desc',
+            preProcess: function(data) {
+                data.rows = jQuery.map(data.data, function(row, i) {
+                    return { 'cell': [
+                        fmt_value(row.tagname_count ),
+                        fmt_value(row.tagname_value )
+                    ] };
+                });
+                return data;
+            }
+        });
+    },
+
+
+
+    tagnames_lang4: function(key, value, filter_type) {
+        create_flexigrid('grid-tagnames-lang4', {
+            url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
+                    '&value='  + encodeURIComponent(value)  + 
+                    '&key2='   + encodeURIComponent(  '<%=TaginfoConfig.get('tnames.lang4')%>' ) + 
+                    '&filter=' + encodeURIComponent(filter_type),
+            colModel: [
+                { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
+                { display: '<span title="<%= TaginfoConfig.get('tnames.lang4') %>"><%= TaginfoConfig.get('tnames.lang4') %></span>',        name: 'tagname_value', width: 400, sortable: true },
+            ],
+            searchitems: [
+                { display: '<%= TaginfoConfig.get('tnames.lang4') %>', name: 'tagname_value' }
+            ],
+            sortname: 'tagname_count',
+            sortorder: 'desc',
+            preProcess: function(data) {
+                data.rows = jQuery.map(data.data, function(row, i) {
+                    return { 'cell': [
+                        fmt_value(row.tagname_count ),
+                        fmt_value(row.tagname_value )
+                    ] };
+                });
+                return data;
+            }
+        });
+    },
     
-    tagnames_en: function(key, value, filter_type) {
-        create_flexigrid('grid-tagnames-en', {
-            url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent('name:en') + 
-                    '&filter=' + encodeURIComponent(filter_type),
-            colModel: [
-                { display: '<span title="<%= h(page.tagnames_en.tagname_count_tooltip) %>"><%= h(page.tagnames_en.tagname_count) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
-                { display: '<span title="<%= h(page.tagnames_en.tagname_value_tooltip) %>"><%= h(page.tagnames_en.tagname_value) %></span>',        name: 'tagname_value', width: 400, sortable: true },
-            ],
-            searchitems: [
-                { display: '<%= h(page.tagnames_en.tagname_value) %>', name: 'tagname_value' }
-            ],
-            sortname: 'tagname_count',
-            sortorder: 'desc',
-            preProcess: function(data) {
-                data.rows = jQuery.map(data.data, function(row, i) {
-                    return { 'cell': [
-                        fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
-                    ] };
-                });
-                return data;
-            }
-        });
-    },
 
-    tagnames_es: function(key, value, filter_type) {
-        create_flexigrid('grid-tagnames-es', {
+    tagnames_lang5: function(key, value, filter_type) {
+        create_flexigrid('grid-tagnames-lang5', {
             url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
                     '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent('name:es') + 
+                    '&key2='   + encodeURIComponent(  '<%=TaginfoConfig.get('tnames.lang5')%>' ) + 
                     '&filter=' + encodeURIComponent(filter_type),
             colModel: [
-                { display: '<span title="<%= h(page.tagnames_es.tagname_count_tooltip) %>"><%= h(page.tagnames_es.tagname_count) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
-                { display: '<span title="<%= h(page.tagnames_es.tagname_value_tooltip) %>"><%= h(page.tagnames_es.tagname_value) %></span>',        name: 'tagname_value', width: 400, sortable: true },
+                { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
+                { display: '<span title="<%= TaginfoConfig.get('tnames.lang5') %>"><%= TaginfoConfig.get('tnames.lang5') %></span>',        name: 'tagname_value', width: 400, sortable: true },
             ],
             searchitems: [
-                { display: '<%= h(page.tagnames_es.tagname_value) %>', name: 'tagname_value' }
+                { display: '<%= TaginfoConfig.get('tnames.lang5') %>', name: 'tagname_value' }
             ],
             sortname: 'tagname_count',
             sortorder: 'desc',
@@ -147,60 +208,10 @@ var create_flexigrid_for = {
     },
 
 
-    tagnames_fr: function(key, value, filter_type) {
-        create_flexigrid('grid-tagnames-fr', {
-            url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent('name:fr') + 
-                    '&filter=' + encodeURIComponent(filter_type),
-            colModel: [
-                { display: '<span title="<%= h(page.tagnames_fr.tagname_count_tooltip) %>"><%= h(page.tagnames_fr.tagname_count) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
-                { display: '<span title="<%= h(page.tagnames_fr.tagname_value_tooltip) %>"><%= h(page.tagnames_fr.tagname_value) %></span>',        name: 'tagname_value', width: 400, sortable: true },
-            ],
-            searchitems: [
-                { display: '<%= h(page.tagnames_fr.tagname_value) %>', name: 'tagname_value' }
-            ],
-            sortname: 'tagname_count',
-            sortorder: 'desc',
-            preProcess: function(data) {
-                data.rows = jQuery.map(data.data, function(row, i) {
-                    return { 'cell': [
-                        fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
-                    ] };
-                });
-                return data;
-            }
-        });
-    },
 
-    
-    tagnames_de: function(key, value, filter_type) {
-        create_flexigrid('grid-tagnames-de', {
-            url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent('name:de') + 
-                    '&filter=' + encodeURIComponent(filter_type),
-            colModel: [
-                { display: '<span title="<%= h(page.tagnames_de.tagname_count_tooltip) %>"><%= h(page.tagnames_de.tagname_count) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
-                { display: '<span title="<%= h(page.tagnames_de.tagname_value_tooltip) %>"><%= h(page.tagnames_de.tagname_value) %></span>',        name: 'tagname_value', width: 400, sortable: true },
-            ],
-            searchitems: [
-                { display: '<%= h(page.tagnames_de.tagname_value) %>', name: 'tagname_value' }
-            ],
-            sortname: 'tagname_count',
-            sortorder: 'desc',
-            preProcess: function(data) {
-                data.rows = jQuery.map(data.data, function(row, i) {
-                    return { 'cell': [
-                        fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
-                    ] };
-                });
-                return data;
-            }
-        });
-    },
+
+
+
 
 
 

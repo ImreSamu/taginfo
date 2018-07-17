@@ -25,7 +25,7 @@ class Taginfo < Sinatra::Base
             [:tagname_count, :INT,    'Number of objects that have both this tag and other key.']
         ]),
         :example => { :key => 'amenity', :value => 'fast_food', :key2 => 'name', :page => 1, :rp => 10, :sortname => 'tagname_count', :sortorder => 'desc' },
-        :ui => '/tags/amenity=fast_food#tagnames'
+        :ui => '/tags/amenity=fast_food#tagnames_lang1'
     }) do
         key = params[:key]
         value = params[:value]

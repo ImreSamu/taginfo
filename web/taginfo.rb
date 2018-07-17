@@ -214,6 +214,7 @@ class Taginfo < Sinatra::Base
     # current API (version 4)
     load 'lib/api/v4/key.rb'
     load 'lib/api/v4/keys.rb'
+    load 'lib/api/v4/normalization.rb' 
     load 'lib/api/v4/project.rb'
     load 'lib/api/v4/projects.rb'
     load 'lib/api/v4/relation.rb'
