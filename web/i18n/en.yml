@@ -45,7 +45,7 @@ taginfo:
     map: Map
     maps: Maps
     relations: Relations
-    combinations: Combinations       
+    combinations: Combinations
     key_combinations: Combinations
     comparison: Key/Tag Comparison
     overview: Overview
@@ -574,11 +574,11 @@ reports:
     normalized_names:
         name: Normalized name differences (Experimental)
         intro: |
-            <p>Normalized OpenstreetMap name values - with different spellings.  
-            Some spelling differences maybe valid - some not ! 
-            <b>Need some local knowledge!  Be careful! Discuss with the local community! </b> 
+            <p>Normalized OpenstreetMap name values - with different spellings.
+            Some spelling differences maybe valid - some not !
+            <b>Need some local knowledge!  Be careful! Discuss with the local community! </b>
                (you can download (<a href="/download/normalized_names.xlsx">normalized_names.xlsx</a> )
-                and examine the result with the "LibreOffice Calc" or "Excel") 
+                and examine the result with the "LibreOffice Calc" or "Excel")
                  </p>
         k: k
         v: v
@@ -589,7 +589,7 @@ reports:
         also_show_keys: normalized - also show
         table:
             create_wiki_page: Create normalized_pages page...
-                
+
     key_lengths:
         name: Key lengths
         intro: |

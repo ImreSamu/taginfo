@@ -1,7 +1,5 @@
 
 <%
-    osm = @trans.t.osm
-    misc = @trans.t.misc
     page = @trans.t.reports.frequently_used_keys_without_wiki_page
  %>
 
@@ -31,7 +29,7 @@
                     link_to_key(row.keyname),
                     fmt_value(row.normalized_keyname_value),
                     fmt_value(row.keyname_value),
-                    fmt_value(row.count_all)                                                            
+                    fmt_value(row.count_all)
                 ] };
             });
             return data;

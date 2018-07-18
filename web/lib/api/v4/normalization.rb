@@ -9,7 +9,7 @@ class Taginfo < Sinatra::Base
             [:v                         , :STRING, 'v'],
             [:keyname                   , :STRING, 'keyname'],
             [:normalized_keyname_value  , :STRING, 'normalized_keyname_value'],
-            [:keyname_value             , :STRING, 'keyname_value'],                        
+            [:keyname_value             , :STRING, 'keyname_value'],
             [:count_all                 , :INT,    'Number of keyname values']
         ]),
         :sort => %w( k v keyname normalized_keyname_value ),
@@ -33,10 +33,10 @@ class Taginfo < Sinatra::Base
         return generate_json_result(total,
             res.map{ |row| {
                 :k                       => row['k'],
-                :v                       => row['v'],                
+                :v                       => row['v'],
                 :keyname                 => row['keyname'],
                 :normalized_keyname_value=> row['normalized_keyname_value'],
-                :keyname_value           => row['keyname_value'],                
+                :keyname_value           => row['keyname_value'],
                 :count_all               => row['count_all'].to_i
             } }
         )

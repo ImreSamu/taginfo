@@ -10,7 +10,7 @@ using SQLite, DataFrames, XLSX
 db = SQLite.DB( ARGS[1] )
 
 @register db function julia_normalize_string(s)
-            replace( replace( 
+            replace( replace(
                 normalize_string(s,
 					  decompose=true,
 					  compat=true,
@@ -19,7 +19,7 @@ db = SQLite.DB( ARGS[1] )
 					  stripignore=true,
                       stripcc=true)
                 , " ","")
-                , "-","")      
+                , "-","")
        end
 
 SQLite.drop!(db, "temp_normalized_names", ifexists=true)
@@ -131,9 +131,9 @@ SQLite.query(db, """
           ,l.count_all
     from temp_normalized_names as l
     join d
-    where     l.keyname=d.keyname 
+    where     l.keyname=d.keyname
           and l.normalized_keyname_value=d.normalized_keyname_value
-          and l.k=d.k 
+          and l.k=d.k
           and l.v=d.v
     order by 1,2,3,4
 ;

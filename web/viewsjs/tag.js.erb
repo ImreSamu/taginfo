@@ -64,13 +64,11 @@ var create_flexigrid_for = {
         });
     },
 
-
-
     tagnames_lang1: function(key, value, filter_type) {
         create_flexigrid('grid-tagnames-lang1', {
             url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent( '<%=TaginfoConfig.get('tnames.lang1')%>' ) + 
+                    '&value='  + encodeURIComponent(value)  +
+                    '&key2='   + encodeURIComponent( '<%=TaginfoConfig.get('tnames.lang1')%>' ) +
                     '&filter=' + encodeURIComponent(filter_type),
             colModel: [
                 { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
@@ -93,13 +91,11 @@ var create_flexigrid_for = {
         });
     },
 
-
-
     tagnames_lang2: function(key, value, filter_type) {
         create_flexigrid('grid-tagnames-lang2', {
             url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent(   '<%=TaginfoConfig.get('tnames.lang2')%>' ) + 
+                    '&value='  + encodeURIComponent(value)  +
+                    '&key2='   + encodeURIComponent(   '<%=TaginfoConfig.get('tnames.lang2')%>' ) +
                     '&filter=' + encodeURIComponent(filter_type),
             colModel: [
                 { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
@@ -122,12 +118,11 @@ var create_flexigrid_for = {
         });
     },
 
-
     tagnames_lang3: function(key, value, filter_type) {
         create_flexigrid('grid-tagnames-lang3', {
             url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent(   '<%=TaginfoConfig.get('tnames.lang3')%>' ) + 
+                    '&value='  + encodeURIComponent(value)  +
+                    '&key2='   + encodeURIComponent(   '<%=TaginfoConfig.get('tnames.lang3')%>' ) +
                     '&filter=' + encodeURIComponent(filter_type),
             colModel: [
                 { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
@@ -150,13 +145,11 @@ var create_flexigrid_for = {
         });
     },
 
-
-
     tagnames_lang4: function(key, value, filter_type) {
         create_flexigrid('grid-tagnames-lang4', {
             url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent(  '<%=TaginfoConfig.get('tnames.lang4')%>' ) + 
+                    '&value='  + encodeURIComponent(value)  +
+                    '&key2='   + encodeURIComponent(  '<%=TaginfoConfig.get('tnames.lang4')%>' ) +
                     '&filter=' + encodeURIComponent(filter_type),
             colModel: [
                 { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
@@ -178,13 +171,12 @@ var create_flexigrid_for = {
             }
         });
     },
-    
 
     tagnames_lang5: function(key, value, filter_type) {
         create_flexigrid('grid-tagnames-lang5', {
             url: '/api/4/tag/tagnames?key=' + encodeURIComponent(key) +
-                    '&value='  + encodeURIComponent(value)  + 
-                    '&key2='   + encodeURIComponent(  '<%=TaginfoConfig.get('tnames.lang5')%>' ) + 
+                    '&value='  + encodeURIComponent(value)  +
+                    '&key2='   + encodeURIComponent(  '<%=TaginfoConfig.get('tnames.lang5')%>' ) +
                     '&filter=' + encodeURIComponent(filter_type),
             colModel: [
                 { display: '<span title="<%= h(page.number_objects) %>"><%= h(page.number_objects) %> &rarr;</span>', name: 'tagname_count', width: 260, sortable: true, align: 'center' },
@@ -206,15 +198,6 @@ var create_flexigrid_for = {
             }
         });
     },
-
-
-
-
-
-
-
-
-
 
     wiki: function(key, value) {
         create_flexigrid('grid-wiki', {

@@ -1,9 +1,6 @@
 # web/lib/api/v4/tag.rb
 class Taginfo < Sinatra::Base
 
-
-
-
     api(4, 'tag/tagnames', {
         :description => 'Find osm `name` key values that are used together with a given tag.',
         :parameters => {
@@ -73,41 +70,6 @@ class Taginfo < Sinatra::Base
             } }
         )
     end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     api(4, 'tag/combinations', {
         :description => 'Find keys and tags that are used together with a given tag.',
@@ -188,17 +150,6 @@ class Taginfo < Sinatra::Base
             } }
         )
     end
-
-
-
-
-
-
-
-
-
-
-
 
     api(4, 'tag/distribution/nodes', {
         :description => 'Get map with distribution of this tag in the database (nodes only). Will return empty image if there is no map available for this tag.',
