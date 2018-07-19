@@ -83,7 +83,7 @@ var create_flexigrid_for = {
                 data.rows = jQuery.map(data.data, function(row, i) {
                     return { 'cell': [
                         fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
+                        hover_expand(link_to_value('<%=TaginfoConfig.get('tnames.lang1')%>', row.tagname_value ))
                     ] };
                 });
                 return data;
@@ -110,7 +110,7 @@ var create_flexigrid_for = {
                 data.rows = jQuery.map(data.data, function(row, i) {
                     return { 'cell': [
                         fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
+                        hover_expand(link_to_value('<%=TaginfoConfig.get('tnames.lang2')%>', row.tagname_value ))
                     ] };
                 });
                 return data;
@@ -137,7 +137,7 @@ var create_flexigrid_for = {
                 data.rows = jQuery.map(data.data, function(row, i) {
                     return { 'cell': [
                         fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
+                        hover_expand(link_to_value('<%=TaginfoConfig.get('tnames.lang3')%>', row.tagname_value ))
                     ] };
                 });
                 return data;
@@ -164,7 +164,7 @@ var create_flexigrid_for = {
                 data.rows = jQuery.map(data.data, function(row, i) {
                     return { 'cell': [
                         fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
+                        hover_expand(link_to_value('<%=TaginfoConfig.get('tnames.lang4')%>', row.tagname_value ))
                     ] };
                 });
                 return data;
@@ -191,7 +191,7 @@ var create_flexigrid_for = {
                 data.rows = jQuery.map(data.data, function(row, i) {
                     return { 'cell': [
                         fmt_value(row.tagname_count ),
-                        fmt_value(row.tagname_value )
+                        hover_expand(link_to_value('<%=TaginfoConfig.get('tnames.lang5')%>', row.tagname_value ))
                     ] };
                 });
                 return data;

@@ -3,6 +3,9 @@ class Taginfo < Sinatra::Base
 
     api(4, 'normalization/names', {
         :description => 'List Names dups....',
+        :parameters => {
+            :query => 'Only show results where the (keyname_value) matches this query (substring match, optional).'
+        },
         :paging => :optional,
         :result => paging_results([
             [:k                         , :STRING, 'k'],
@@ -17,8 +20,13 @@ class Taginfo < Sinatra::Base
         :ui => '/reports/normalizednames'
     }) do
 
-        total = @db.select("SELECT count(*) FROM normalized_names").get_first_value().to_i
+        total = @db.count('normalized_names').
+            condition_if("keyname_value LIKE ? ESCAPE '@'", like_contains(params[:query])).
+            get_first_i
+#        total = @db.select("SELECT count(*) FROM normalized_names").get_first_value().to_i
+
         res = @db.select('SELECT * FROM normalized_names').
+            condition_if("keyname_value LIKE ? ESCAPE '@'", like_contains(params[:query])).
             order_by(@ap.sortname, @ap.sortorder) { |o|
                 o.k
                 o.v

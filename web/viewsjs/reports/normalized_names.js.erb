@@ -1,5 +1,7 @@
 
 <%
+    osm = @trans.t.osm
+    misc = @trans.t.misc
     page = @trans.t.reports.frequently_used_keys_without_wiki_page
  %>
 
@@ -17,7 +19,7 @@
 
         ],
         searchitems: [
-            { display: 'normalized_keyname_value', name: 'normalized_keyname_value' }
+            { display: 'keyname_value', name: 'keyname_value' }
         ],
         sortname: 'k',
         sortorder: 'asc',
@@ -25,10 +27,10 @@
             data.rows = jQuery.map(data.data, function(row, i) {
                 return { 'cell': [
                     link_to_key(row.k),
-                    fmt_value(row.v),
+                    hover_expand(link_to_value(row.k,row.v )),
                     link_to_key(row.keyname),
                     fmt_value(row.normalized_keyname_value),
-                    fmt_value(row.keyname_value),
+                    hover_expand(link_to_value(row.keyname,row.keyname_value )),
                     fmt_value(row.count_all)
                 ] };
             });
