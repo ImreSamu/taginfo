@@ -55,6 +55,7 @@ Report.new 'Database statistics', :db
 Report.new 'Characters in keys', :db
 Report.new 'Frequently used keys without wiki page', :db, :wiki
 Report.new 'Normalized names', :db
+Report.new 'Problematic tags', :db
 Report.new 'Key lengths', :db
 Report.new 'Language comparison table for keys in the wiki', :wiki
 Report.new 'Languages', :wiki

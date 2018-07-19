@@ -1,10 +1,15 @@
 
 
-# julia -i -- ./taginfo/sources/db/normalized_names.jl ./data/taginfo-db.db ./download/normalized_names.xlsx
+# julia -- ./taginfo/sources/db/normalized_names.jl ./data/taginfo-db.db ./download/normalized_names.xlsx
 # Julia v0.6
 
 
 using SQLite, DataFrames, XLSX
+
+
+println("db   = ",ARGS[1])
+println("xlsx = ",ARGS[2])
+
 
 #db = SQLite.DB("./data/taginfo-db.db")
 db = SQLite.DB( ARGS[1] )
@@ -52,6 +57,8 @@ SQLite.query(db, """
                      ,'species','genus'
                      ,'addr:street','addr:city','addr:country','addr:state'
                      ,'addr:district','addr:region','addr:hamlet','addr:place'
+                     ,'parish','diocese','deanery'
+                     ,'architect'
                      )
             or key2 like '%name:%'
             or key2 like 'species:%'
@@ -90,6 +97,8 @@ SQLite.query(db, """
                       ,'species','genus'
                       ,'addr:street','addr:city','addr:country','addr:state'
                       ,'addr:district','addr:region','addr:hamlet','addr:place'
+                      ,'parish','diocese','deanery'
+                      ,'architect'                      
                       )
              or key1 like '%name:%'
              or key1 like 'species:%'
@@ -113,9 +122,9 @@ SQLite.query(db, """
 #    """)
 
 
-SQLite.drop!(db, "normalized_names", ifexists=true)
+SQLite.drop!(db, "temp_normalized_names_2", ifexists=true)
 SQLite.query(db, """
-    create table normalized_names as
+    create TEMPORARY table temp_normalized_names_2 as
     with d as
     (   SELECT keyname,normalized_keyname_value, k, v
         FROM temp_normalized_names
@@ -139,22 +148,27 @@ SQLite.query(db, """
 ;
 """)
 
-SQLite.query(db, "CREATE INDEX normalized_names_k_idx              ON normalized_names (k);")
-SQLite.query(db, "CREATE INDEX normalized_names_v_idx              ON normalized_names (v);")
-SQLite.query(db, "CREATE INDEX normalized_names_keyname_idx        ON normalized_names (keyname);")
-SQLite.query(db, "CREATE INDEX normalized_names_normalized_keyname_value_idx   ON normalized_names (normalized_keyname_value);")
-SQLite.query(db, "CREATE INDEX normalized_names_keyname_value_idx  ON normalized_names (keyname_value);")
-
-SQLite.query(db, "CREATE INDEX normalized_names_idx  ON normalized_names (k,v,keyname,normalized_keyname_value);")
-
-SQLite.query(db, "ANALYZE normalized_names;")
-
 normalized_names = SQLite.query(db, """
-    select * from normalized_names;
-    ;
+    select * from temp_normalized_names_2;
     """)
 
 
-XLSX.writetable( ARGS[2]  , DataFrames.columns(normalized_names), DataFrames.names(normalized_names))
+# workaround: https://github.com/JuliaDatabases/SQLite.jl/issues/147
+SQLite.drop!(db, "normalized_names", ifexists=true)
+sink_normalized_names = SQLite.Sink(db, "normalized_names", Data.schema(normalized_names))
+SQLite.load(sink_normalized_names, normalized_names)
 
 
+
+SQLite.query(db, "CREATE INDEX normalized_names_k_idx                        ON normalized_names (k);")
+SQLite.query(db, "CREATE INDEX normalized_names_v_idx                        ON normalized_names (v);")
+SQLite.query(db, "CREATE INDEX normalized_names_keyname_idx                  ON normalized_names (keyname);")
+SQLite.query(db, "CREATE INDEX normalized_names_normalized_keyname_value_idx ON normalized_names (normalized_keyname_value);")
+SQLite.query(db, "CREATE INDEX normalized_names_keyname_value_idx            ON normalized_names (keyname_value);")
+SQLite.query(db, "CREATE INDEX normalized_names_idx                          ON normalized_names (k,v,keyname,normalized_keyname_value);")
+
+SQLite.query(db, "ANALYZE normalized_names;")
+
+
+
+XLSX.writetable( ARGS[2], DataFrames.columns(normalized_names), DataFrames.names(normalized_names), rewrite=false,sheetname="normalized_names")

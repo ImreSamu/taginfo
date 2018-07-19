@@ -18,6 +18,8 @@ if [ -z $DATADIR ]; then
     exit 1
 fi
 
+
+readonly DATABASE=$DATADIR/db/taginfo-db.db
 readonly MASTER_DB=$DATADIR/taginfo-master.db
 readonly HISTORY_DB=$DATADIR/taginfo-history.db
 readonly SELECTION_DB=$DATADIR/selection.db
@@ -68,6 +70,15 @@ main() {
     create_master_database
     create_selection_database
     update_history_database
+
+    print_message "- julia postprocessing."
+    rm -f $DATADIR/*.xlsx
+    print_message "Done master."
+
+    echo "julia - SRCDIR = $SRCDIR"
+    echo "julia - DATABASE = $DATABASE"
+    julia -- $SRCDIR/normalized_names.jl $DATABASE  $DATADIR/normalized_names.xlsx
+    julia -- $SRCDIR/problematic_tags.jl $DATABASE  $DATADIR/problematic_tags.xlsx
 
     print_message "Done master."
 }

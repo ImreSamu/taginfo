@@ -571,8 +571,22 @@ reports:
         table:
             create_wiki_page: Create wiki page...
 
+    problematic_tags:
+        name: QA-Problematic tags (Experimental)
+        intro: |
+            <p> Problematic tag values with special characters
+              <b>Only - lowcase and underscore [a-z_] amd '-',':' characters  and accepted separators allowed: ";" , "; " </b>
+              Be careful - sometimes there is a hidden/special Unicode values!
+            <b>Need some deep osm & local knowledge! Be careful! Discuss with the local community! </b>
+               (you can download (<a href="/download/problematic_tags.xlsx">problematic_tags.xlsx</a> )
+                and examine the result with the "LibreOffice Calc" or "Excel")
+                 </p>                     
+        key: key
+        value:  value
+        count_all: count_all
+           
     normalized_names:
-        name: Normalized name differences (Experimental)
+        name: QA-Normalized name differences (Experimental)
         intro: |
             <p>Normalized OpenstreetMap name values - with different spellings.
             Some spelling differences maybe valid - some not !

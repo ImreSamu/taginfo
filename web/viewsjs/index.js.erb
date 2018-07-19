@@ -100,9 +100,12 @@ function fill_lists() {
     i = 0;
     while (tag_list.outerHeight() < max_height && tags_data[i]) {
         var d = tags_data[i];
-        tag_list.append(link_to_tag(d[0], d[1]));
-        tag_list.append(' &bull; ');
+        if ( (d[0].length + d[1].length) <= 70 ) {
+            tag_list.append(link_to_tag(d[0], d[1]));
+            tag_list.append(' &bull; ');
+        }
         i++;
+
     }
     tag_list.append('...');
 

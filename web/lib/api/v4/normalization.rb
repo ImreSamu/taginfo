@@ -50,4 +50,46 @@ class Taginfo < Sinatra::Base
         )
     end
 
+
+
+
+    api(4, 'normalization/problematic_tags', {
+        :description => 'List problematic tags....',
+        :parameters => {
+            :query => 'Only show results where the (key) matches this query (substring match, optional).'
+        },
+        :paging => :optional,
+        :result => paging_results([
+            [:key                       , :STRING, 'key'],
+            [:value                     , :STRING, 'value'],
+            [:count_all                 , :INT,    'Number of values']
+        ]),
+        :sort => %w( key value ),
+        :example => { :sortname => 'key', :sortorder => 'asc' },
+        :ui => '/reports/problematic_tags'
+    }) do
+
+        total = @db.count('problematic_tags').
+            condition_if("key LIKE ? ESCAPE '@'", like_contains(params[:query])).
+            get_first_i
+
+        res = @db.select('SELECT * FROM problematic_tags').
+            condition_if("key LIKE ? ESCAPE '@'", like_contains(params[:query])).
+            order_by(@ap.sortname, @ap.sortorder) { |o|
+                o.key
+                o.value
+                o.count_all
+            }.
+            paging(@ap).
+            execute()
+
+        return generate_json_result(total,
+            res.map{ |row| {
+                :key        => row['key'],
+                :value      => row['value'],
+                :count_all  => row['count_all'].to_i
+            } }
+        )
+    end
+
 end

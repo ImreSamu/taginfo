@@ -109,7 +109,7 @@ INSERT INTO top_tags (skey, svalue)
     SELECT DISTINCT key1 as k, value1 as v FROM db.tag_combinations WHERE value1 != ''
     UNION
     SELECT DISTINCT key2 as k, value2 as v FROM db.tag_combinations WHERE value2 != ''
-   ) as t 
+   ) as t
   ORDER BY k,v;
 
 
@@ -132,7 +132,7 @@ CREATE TABLE temp_project_unique_tags (
   PRIMARY KEY (key, value)
 );
 INSERT INTO temp_project_unique_tags (key, value, projects)
-    SELECT key, value, projects 
+    SELECT key, value, projects
     FROM projects.project_unique_tags
     ORDER BY  key, value;
 
@@ -187,7 +187,7 @@ UPDATE popular_keys SET scale_count = CAST (count - (SELECT count_min FROM popul
 UPDATE popular_keys SET scale_users = CAST (users - (SELECT users_min FROM popular_metadata) AS REAL) / (SELECT users_delta FROM popular_metadata);
 UPDATE popular_keys SET scale_wiki  = CAST (wikipages AS REAL) / (SELECT max(wikipages) FROM popular_keys);
 UPDATE popular_keys SET scale_name  = 1;
---UPDATE popular_keys SET scale_name  = 0 WHERE key LIKE '%:%';
+UPDATE popular_keys SET scale_name  = 0 WHERE key LIKE '%:%';
 
 UPDATE popular_keys SET scale1 = 10 * scale_count + 8 * scale_users + 2 * scale_wiki + 2 * scale_name;
 
@@ -211,7 +211,7 @@ CREATE TABLE suggestions (
 INSERT INTO suggestions (key, value, count, in_wiki)
         SELECT key, NULL, count_all, in_wiki
             FROM db.keys
-            WHERE count_all >= 1000 OR (in_wiki = 1 AND count_all >= 10)
+            WHERE count_all >= 100 OR (in_wiki = 1 AND count_all >= 10)
     UNION
         SELECT DISTINCT p.key, p.value, p.count, title NOT NULL
             FROM db.prevalent_values p LEFT JOIN wiki.wikipages w ON p.key=w.key AND p.value = w.value

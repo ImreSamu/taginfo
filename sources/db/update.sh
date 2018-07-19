@@ -86,9 +86,6 @@ main() {
     run_sql $DATABASE $SRCDIR/post_grades.sql
     run_sql $DATABASE $SRCDIR/post_indexes.sql
 
-    rm -f $DATADIR/normalized_names.xlsx
-    julia -- $SRCDIR/normalized_names.jl $DATABASE  $DATADIR/normalized_names.xlsx
-
     finalize_database $DATABASE $SRCDIR
 
     print_message "Done db."
