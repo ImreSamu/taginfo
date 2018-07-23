@@ -24,30 +24,35 @@ problematic_tags = SQLite.query(db, """
                      ,'boundary', 'place'
                      ,'highway', 'railway'
                      ,'public_transport', 'junction', 'barrier', 'entrance', 'route'
-                     ,'building','building:part'
+                      --| re-check: ,'building','building:part'
+                     ,'building:use'
                 -- material related tags:
                      ,'sidewalk'
                      ,'material','smoothness','trail_visibility'
                      ,'roof:material','building:material'
                      ,'roof:shape'                       -- extra valid values!!
-                     ,'roof:orientation'
+                     ,'roof:orientation','roof'
                      ,'mineral'
                 -- bycicle related tags:
                      ,'bicycle' ,'cycleway:lane'
                      ,'cycleway','cycleway:foot','cycleway:smoothness'
+                     ,'bicycle_parking','service:bicycle:pump'
                 -- surface ...  extra valid values!!
-                     ,'cycleway:right:surface','cycleway:left:surface','cycleway:surface','surface'
-                     ,'sidewalk:surface'
+                    --# ,'cycleway:right:surface','cycleway:left:surface','cycleway:surface','surface'
+                    --# ,'sidewalk:surface'
                 -- hiking tags -acces
                      ,'access','footway','sac_scale','service','vehicle'
                      ,'hiking','bridge','crossing','toll'
                      ,'foot','segregated','horse'
-                     ,'motor_vehicle','motorcycle','motorcar','moped','snowmobile','goods'
+                     ,'motor_vehicle','motorcycle','motorcar','moped','snowmobile','goods','bus'
+                     ,'boat','canoe','motorboat','ship','agricultural'
                      ,'barrier','fence_type'
                      ,'tunnel','wall'
                      ,'wheelchair','toilets:wheelchair','ramp:wheelchair','toilets','diaper'
                      ,'unisex','male','female','dog'
                      ,'hearing_aids'
+                     ,'usage','embankment'
+                     ,'shelter'
                 -- tourism:
                      ,'information','board_type'
                      ,'drinking_water','pump'
@@ -72,12 +77,18 @@ problematic_tags = SQLite.query(db, """
                      ,'building:architecture'
                 -- tower - man-made ...
                      ,'tower:type','tower:construction','building:fireproof'
-                     ,'electrified'
-                     ,'nuclear_explosion:type'
-                     ,'operator:type'
+                     ,'electrified','design','transformer','wires','pole:type','structure'
+                     ,'nuclear_explosion:type','generator:method','generator:source','generator:type'
+                     ,'substation'
+                     ,'operator:type','surveillance'
+                     ,'industrial','gas','location'
                 -- community
                      ,'community_centre','community_centre:for'
                      ,'club'
+                -- natural
+                     ,'leaf_type','leaf_cycle','denotation'  
+                     ,'natural_protection'
+                     ,'intermittent','seasonal'   
                 -- other
                      ,'area','type','disused','abandoned','indoor','noname'
                      )
@@ -101,3 +112,13 @@ SQLite.query(db, "ANALYZE problematic_tags;")
 
 XLSX.writetable( ARGS[2], DataFrames.columns(problematic_tags), DataFrames.names(problematic_tags), sheetname="problematic_tags")
 
+
+
+# --------------
+# value(az + numbers )  
+#  'tracktype'
+#  'traces'
+
+# only number 
+#  admin_level
+#  beds
