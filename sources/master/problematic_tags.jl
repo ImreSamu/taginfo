@@ -1,7 +1,7 @@
 
 
 # julia  -- ./taginfo/sources/db/problematic_tags.jl ./data/taginfo-db.db ./download/problematic_tags.xlsx
-# Julia v0.6
+# Julia v1.0
 
 using SQLite, DataFrames, XLSX
 

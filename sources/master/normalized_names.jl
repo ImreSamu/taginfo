@@ -1,10 +1,10 @@
 
 
 # julia -- ./taginfo/sources/db/normalized_names.jl ./data/taginfo-db.db ./download/normalized_names.xlsx
-# Julia v0.6
+# Julia v1.0
 
 
-using SQLite, DataFrames, XLSX
+using SQLite, DataFrames, XLSX, Unicode
 
 
 println("db   = ",ARGS[1])
@@ -16,15 +16,15 @@ db = SQLite.DB( ARGS[1] )
 
 @register db function julia_normalize_string(s)
             replace( replace(
-                normalize_string(s,
+                Unicode.normalize(s,
 					  decompose=true,
 					  compat=true,
 					  casefold=true,
 					  stripmark=true,
 					  stripignore=true,
                       stripcc=true)
-                , " ","")
-                , "-","")
+                , " " => "")
+                , "-" => "")
        end
 
 SQLite.drop!(db, "temp_normalized_names", ifexists=true)
@@ -173,4 +173,4 @@ SQLite.query(db, "ANALYZE normalized_names;")
 
 
 
-XLSX.writetable( ARGS[2], DataFrames.columns(normalized_names), DataFrames.names(normalized_names), rewrite=false,sheetname="normalized_names")
+XLSX.writetable( ARGS[2], DataFrames.columns(normalized_names), DataFrames.names(normalized_names), overwrite=false,sheetname="normalized_names")
